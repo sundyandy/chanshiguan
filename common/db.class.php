@@ -15,11 +15,11 @@ class DB
     //私有的构造方法
     private function __construct($config = array())
     {
-        $this->host = isset($config['host']) ? $config['host'] : '192.168.33.30';
+        $this->host = isset($config['host']) ? $config['host'] : '127.0.0.1';
         $this->port = isset($config['port']) ? $config['port'] : '3306';
         $this->user = isset($config['user']) ? $config['user'] : 'root';
         $this->pass = isset($config['pass']) ? $config['pass'] : 'root';
-        $this->db = isset($config['db']) ? $config['db'] : 'test';
+        $this->db = isset($config['db']) ? $config['db'] : 'chanshiguan';
         $this->charset = isset($arr['charset']) ? $arr['charset'] : 'utf8';
         //连接数据库
         $this->db_connect();

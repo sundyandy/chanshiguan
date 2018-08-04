@@ -11,6 +11,7 @@ $dbClint = db::getIntance();
 $id = intval($_POST['id']);
 $sql = "select * from event where id=".$id;
 $rows = $dbClint->getRow($sql);
+
 $res = [
     'code' => 0,
     'data' => $rows

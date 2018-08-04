@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap 101 Template</title>
+    <title>缠史官</title>
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
   </head>
   <body>
@@ -45,8 +45,8 @@
               html += '<td>' + v.event_name + '</td>';
               html += '<td>' + v.event_begin_date + '</td>';
               html += '<td>' + days + '天</td>';
-              html += '<td>' + v.remark + '</td>';
-              html += '<td><a href="detail.php?id="' + v.id + '">明细</a></td>';
+              html += '<td>' + v.remark.replace(/&lt;br \/&gt;/g, "<br>") + '</td>';
+              html += '<td><a href="detail.html?id=' + v.id + '">明细</a></td>';
               html += '</tr>';
             })
             //console.log(html);
