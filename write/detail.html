@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>缠史官</title>
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/docs.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">事件</h3>
+              </div>
+              <div class="panel-body">
+                  <form action="edit.php" method="POST">
+                    <fieldset>
+                      <div class="form-group">
+                        <label for="event_name">事件名称</label>
+                        <input type="text" class="form-control" id="event_name" name="event_name" placeholder="事件名称" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="event_begin_date">事件发生日期</label>
+                        <input type="date" class="form-control" id="event_begin_date" name="event_begin_date" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="remark">备注</label>
+                        <textarea class="form-control" rows="10" name="remark" id="remark"></textarea>
+                      </div>
+                      <input type="hidden" name="id" id="id">
+                      <button type="submit" class="btn btn-info btn-block">更新</button>
+                    </fieldset>
+                  </form>
+              </div>
+            </div>
+
+            
+        </div>
+      </div>
+      
+      <hr>
+      <div class="row">
+        <div class="col-md-6 event_time_line">
+          
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                  <h3 class="panel-title">新增时间线</h3>
+                </div>
+                <div class="panel-body">
+                  <form action="add_time_line.php" method="POST">
+                      <fieldset>
+                        <div class="form-group">
+                          <label for="time_line_date">发生日期</label>
+                          <input type="date" class="form-control" id="event_begin_date" name="time_line_date" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="remark">备注</label>
+                          <textarea class="form-control" rows="5" name="remark" id="remark"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="sort">排序（数字越小排越前）</label>
+                            <input type="text" class="form-control" id="sort" name="sort" placeholder="排序" value="1">
+                          </div>
+                        <input type="hidden" name="enevt_id" id="enevt_id">
+                        <button type="submit" class="btn btn-success btn-block">新增</button>
+                      </fieldset>
+                  </form>
+              </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="../static/js/jquery.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="../static/js/bootstrap.min.js"></script>
+
+    <script>
+      $(function(){
+        var id = GetQueryString('id');
+        $.ajax({
+          type: "POST",
+          url: "detail.php",
+          dataType: "json",
+          data: "id="+id,
+          success: function (res) {
+            $('#id').val(res.data.id);
+            $('#enevt_id').val(res.data.id);
+            $('#event_name').val(res.data.event_name);
+            $('#event_begin_date').val(res.data.event_begin_date);
+            $('#remark').val(res.data.remark.replace(/&lt;br \/&gt;/g, "\t"));
+          }
+        });
+
+        $.ajax({
+          type: "POST",
+          url: "event_timeline.php",
+          dataType: "json",
+          data: "event_id="+id,
+          success: function (res) {
+            html = '';
+            $.each(res.data, function (k, v) {
+              html += '<div class="bs-callout bs-callout-warning" id="callout-type-b-i-elems">';
+              html += '<h4>'+ v.time_line_date +'</h4>';              
+              html += '<p>'+ v.remark +'</p>';              
+              html += '</div>';
+            })
+            //console.log(html);
+            $('.event_time_line').html(html);
+          }
+        });
+      });
+
+      function GetQueryString(name)
+      {
+          var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+          var r = window.location.search.substr(1).match(reg);
+          if(r!=null)return  unescape(r[2]); return null;
+      }
+      </script>
+  </body>
+</html>
