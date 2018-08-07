@@ -22,5 +22,12 @@ if (!empty($enevt_id) && !empty($time_line_date) && !empty($remark)) {
         'time_line_date' => $time_line_date,
     ];
     $dbClint->insert('event_time_line', $data);
+
+    //更新主表update时间
+    $data = [
+        'updated_at' => date('Y-m-d H:i:s'),
+    ];
+    $dbClint->update('event', $data, "id=".$enevt_id);
+
     jump('detail.html?id='.$enevt_id);
 }
