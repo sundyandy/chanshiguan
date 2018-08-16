@@ -70,13 +70,13 @@
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse'.$key.'">
                                         <p>'.$line['event_name'].'<p>
                                         <p>'.$line['event_begin_date'].'&nbsp;&nbsp;,已经过'.diffBetweenTwoDays($line['event_begin_date'], $today).'天</p>
-                                        '.$last_time_line_text.'
+                                        '.htmlspecialchars_decode($last_time_line_text).'
                                     </a>
                                 </h4>
                             </div>
                             <div id="collapse'.$key.'" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    '.$time_line_text.'
+                                    '.htmlspecialchars_decode($time_line_text).'
                                 </div>
                             </div>
                         </div>

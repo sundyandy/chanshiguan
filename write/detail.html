@@ -109,7 +109,7 @@
             $.each(res.data, function (k, v) {
               html += '<div class="bs-callout bs-callout-warning" id="callout-type-b-i-elems">';
               html += '<h4>'+ v.time_line_date +'</h4>';              
-              html += '<p>'+ v.remark +'</p>';              
+              html += '<p>'+ htmlspecialchars_decode(v.remark) +'</p>';              
               html += '</div>';
             })
             //console.log(html);
@@ -123,6 +123,23 @@
           var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
           var r = window.location.search.substr(1).match(reg);
           if(r!=null)return  unescape(r[2]); return null;
+      }
+
+      function htmlspecialchars(str) {            
+        str = str.replace(/&/g, '&amp;');  
+        str = str.replace(/</g, '&lt;');  
+        str = str.replace(/>/g, '&gt;');  
+        str = str.replace(/"/g, '&quot;');  
+        str = str.replace(/'/g, '&#039;');  
+        return str;  
+      }
+      function htmlspecialchars_decode(str){           
+        str = str.replace(/&amp;/g, '&'); 
+        str = str.replace(/&lt;/g, '<');
+        str = str.replace(/&gt;/g, '>');
+        str = str.replace(/&quot;/g, "''");  
+        str = str.replace(/&#039;/g, "'");  
+        return str;  
       }
       </script>
   </body>
